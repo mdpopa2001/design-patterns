@@ -1,0 +1,41 @@
+<configuration>
+    <!-- Our regular log file -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>Payara-VdZRouting.log</file>
+        <append>true</append>
+        <encoder>
+            <Pattern>%d{ISO8601} %-5level %class.%method[%line] - %msg%n</Pattern>
+        </encoder>
+                               
+        <!-- Define when to start a new log file -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- at least daily rotation or when reached 100MB size -->
+            <fileNamePattern>Payara-VdZRouting.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- max. 30 days history -->
+            <maxHistory>30</maxHistory> 
+        </rollingPolicy>
+    </appender>
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+          <level>FINE</level>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>     
+    </appender>
+	
+	<logger name="org.apache" level="INFO" />
+	<logger name="org.jboss" level="INFO" />
+	<logger name="org.hibernate" level="INFO" />
+	<logger name="org.hibernate" level="INFO" />
+
+    <root>
+        <level value="FINE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
